@@ -1,0 +1,78 @@
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>aaa</title>
+	<style>
+		#subject {
+			font-size: 3em;
+		}
+	</style>
+</head>
+
+<body>
+	<main>
+		<div id="subject">aiueo</div>
+		<form id="typing">
+			<input name="input" type="text">
+			<input name="btn" type="submit" value="送信">
+		</form>
+		<p id="time">時間制限: 10秒</p>
+	</main>
+	<script>
+		const textList = [
+			'Hello World',
+			"Good",
+			"I love Javascript",
+			"This is MyApp",
+			"Welcome"
+		];
+
+		const subject = document.getElementById('subject');
+		const form = document.getElementById('typing');
+
+		const submit = function () {
+			const rnd = Math.floor(Math.random() * textList.length);
+			subject.textContent = textList[rnd];
+			form.input.value = '';
+			form.input.focus();
+		};
+
+    submit();
+    setTimeout(submit, 3000, 'hoge');
+    setTimeout(function() { submit() }, 3000, 'hoge');
+
+    function setTimeout(func, sleep_msec, arg1) {
+      await sleep(sleep_msec);
+      func(arg1);
+      // (function() { init() })(arg1);
+    }
+
+		// function init() {
+		// 	const rnd = Math.floor(Math.random() * textList.length);
+		// 	subject.textContent = textList[rnd];
+		// 	form.input.value = '';
+		// 	form.input.focus();
+		// }
+
+		submit();
+
+		let count = 0;
+		form.addEventListener('submit', function (event) {
+			event.preventDefault()
+			if (form.input.value === subject.textContent) {
+				count++;
+				submit();
+			} else {
+				subject.textContent = '間違いです';
+				// setTimeout(function () { init() }, 1000)
+				setTimeout(submit, 1000)
+				console.log('wrong');
+			}
+		});
+
+
+	</script>
+</body>
+
+</html>
