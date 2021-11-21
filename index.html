@@ -7,17 +7,67 @@
 		#subject {
 			font-size: 3em;
 		}
+
+		html {
+			background-color: rgb(53, 54, 58);
+			width: 100%;
+			height: 100%;
+		}
+
+		main {
+			/* background-color: maroon; */
+			/* width: 80%; */
+			/* margin: auto;
+			max-width: 1200px; */
+			height: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		#game {
+			background-color: maroon;
+			height: 600px;
+			width: 1000px;
+		}
+
+		#banner {
+			background-color: rgb(25, 25, 155);
+			margin-top: 15px;
+			height: 100px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		#timelimit {
+			font-size: 3rem;
+			/* height: 100px; */
+			width: 330px;
+			text-align: center;
+			display: flex;
+			justify-content: space-between;
+		}
 	</style>
 </head>
 
 <body>
 	<main>
-		<div id="subject">aiueo</div>
-		<form id="typing">
-			<input name="input" type="text">
-			<input name="btn" type="submit" value="送信">
-		</form>
-		<p id="time">時間制限: 10秒</p>
+		<div id="game">
+			<div id="banner">
+				<div id="timelimit">
+					<span>時間制限:</span>
+					<span>
+						<span id="time"></span>秒
+					</span>
+				</div>
+			</div>
+			<div id="subject">aiueo</div>
+			<form id="typing">
+				<input name="input" type="text">
+				<input name="btn" type="submit" value="送信">
+			</form>
+		</div>
 	</main>
 	<script>
 		const textList = [
@@ -28,45 +78,52 @@
 			"Welcome"
 		];
 
+		let state = true;
+
 		const subject = document.getElementById('subject');
 		const form = document.getElementById('typing');
 
-		const submit = function () {
+		const timer = document.getElementById('time');
+		let time = 15;
+		timer.textContent = time;
+
+		const countdown = setInterval(function () {
+			time--;
+			timer.textContent = time;
+			if (time <= 0) finish();
+		}, 1000)
+
+		const nextwords = function () {
 			const rnd = Math.floor(Math.random() * textList.length);
 			subject.textContent = textList[rnd];
 			form.input.value = '';
 			form.input.focus();
 		};
 
-    submit();
-    setTimeout(submit, 3000, 'hoge');
-    setTimeout(function() { submit() }, 3000, 'hoge');
+		// nextwords();
+		// setTimeout(nextwords, 3000, 'hoge');
+		// setTimeout(function () { nextwords() }, 3000, 'hoge');
 
-    function setTimeout(func, sleep_msec, arg1) {
-      await sleep(sleep_msec);
-      func(arg1);
-      // (function() { init() })(arg1);
-    }
+		nextwords();
 
-		// function init() {
-		// 	const rnd = Math.floor(Math.random() * textList.length);
-		// 	subject.textContent = textList[rnd];
-		// 	form.input.value = '';
-		// 	form.input.focus();
-		// }
 
-		submit();
+		function finish() {
+			clearInterval(countdown);
+			subject.textContent = `正解数は${count}個でした`;
+			state = false;
+		}
 
 		let count = 0;
 		form.addEventListener('submit', function (event) {
 			event.preventDefault()
+			if (!state) return;
 			if (form.input.value === subject.textContent) {
 				count++;
-				submit();
+				nextwords();
 			} else {
 				subject.textContent = '間違いです';
 				// setTimeout(function () { init() }, 1000)
-				setTimeout(submit, 1000)
+				setTimeout(nextwords, 1000)
 				console.log('wrong');
 			}
 		});
