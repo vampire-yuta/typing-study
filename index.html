@@ -8,6 +8,27 @@
 			font-size: 3em;
 		}
 
+		#typing {
+			font-size: 2em;
+		}
+
+		#questionbox-container {
+			display: flex;
+			justify-content: center;
+		}
+
+		#questionbox {
+			position: absolute;
+			bottom: 20%;
+			width: 90%;
+			height: 150px;
+			text-align: center;
+			padding: 10px;
+			border: 5px double #333333;
+			border-radius: 10px;
+			background-color: rgba(255, 255, 255, 0.3)
+		}
+
 		html {
 			background-color: rgb(53, 54, 58);
 			width: 100%;
@@ -29,6 +50,7 @@
 			background-color: maroon;
 			height: 600px;
 			width: 1000px;
+			position: relative;
 		}
 
 		#banner {
@@ -62,11 +84,17 @@
 					</span>
 				</div>
 			</div>
-			<div id="subject">aiueo</div>
-			<form id="typing">
-				<input name="input" type="text">
-				<input name="btn" type="submit" value="送信">
-			</form>
+			<div id="questionbox-container">
+				<div id="questionbox">
+					<div id="subject">
+						aiueo
+					</div>
+					<form id="typing">
+						<input name="input" type="text">
+						<input name="btn" type="submit" value="送信">
+					</form>
+				</div>
+			</div>
 		</div>
 	</main>
 	<script>
